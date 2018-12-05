@@ -1,18 +1,38 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import List from './List.js';
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state={
+      response: '',
+      list: []
+    }
+    
+  }
+  onChange = (event) =>{
+    this.setState({response: event.target.value});
+  }
+  onSubmit =(event) =>{
+    event.preventDefault();
+    this.setState({
+      response: '',
+      list: [...this.state.list, this.state.response]
+    });
+  }
+
+  
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+      <div>
+      <form className="App" onSubmit={this.onSubmit}>
+      <h1>To Do List</h1>
+        <input value={this.state.response} onChange={this.onChange}></input>
+        <button>Add</button>
+      </form>
+      <List response={this.state.response}/>
       </div>
     );
   }
